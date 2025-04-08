@@ -85,7 +85,6 @@ const AddTextCardComponent = ({
       </CardContent>
     </Card>
   );
-  // return <Card {...props}>{children}</Card>;
 };
 
 export default AddTextCardComponent;

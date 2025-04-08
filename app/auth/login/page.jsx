@@ -20,27 +20,31 @@ const LoginPage = () => {
   const [alertText, setAlertText] = useState(null);
 
   const handleLogin = async () => {
-    const payload = {
-      user: userId,
-      password,
-    };
+    try {
+      const payload = {
+        user: userId,
+        password,
+      };
 
-    if ((userId === "admin" || userId === "user") && password === "1234") {
-      const res =
-        userId === "admin"
-          ? await authLoginAdmin(payload)
-          : await authLoginUser(payload);
+      if ((userId === "admin" || userId === "user") && password === "1234") {
+        const res =
+          userId === "admin"
+            ? await authLoginAdmin(payload)
+            : await authLoginUser(payload);
 
-      if (res?.response?.token) {
-        const decoded = jwtDecode(res?.response?.token);
-        localStorage.setItem("token", res?.response?.token);
-        localStorage.setItem("userData", JSON.stringify(decoded));
+        if (res?.response?.token) {
+          const decoded = jwtDecode(res?.response?.token);
+          localStorage.setItem("token", res?.response?.token);
+          localStorage.setItem("userData", JSON.stringify(decoded));
 
-        setAlertText(null);
-        router.push("/");
+          setAlertText(null);
+          router.push("/");
+        }
+      } else {
+        setAlertText("User or Password wrong!");
       }
-    } else {
-      setAlertText("User or Password wrong!");
+    } catch (err) {
+      console.error("Login err =", err);
     }
   };
 
@@ -116,7 +120,7 @@ const LoginPage = () => {
           onClick={handleLogin}
           sx={{
             color: "black",
-            background: "white",
+            backgroundColor: "white",
             borderRadius: "8px",
           }}
         >

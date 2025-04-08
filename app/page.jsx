@@ -1,18 +1,10 @@
 "use client";
 
-import {
-  CardContent,
-  Typography,
-  Grid,
-  Box,
-  Chip,
-  IconButton,
-} from "@mui/material";
+import { Typography, Grid, Box } from "@mui/material";
 
 import { useState, useCallback, useEffect } from "react";
-import TextAreaComponent from "@/components/TextField/TextAreaComponent";
 import CardComponent from "@/components/Card/CardComponent";
-import { ROLE, ROLE_COLOR } from "@/constant/role";
+import { ROLE } from "@/constant/role";
 import AddIconComponent from "@/components/AddComponent/AddIconComponent";
 import AddTextCardComponent from "@/components/AddComponent/AddTextCardComponent";
 
@@ -29,11 +21,19 @@ const HomePage = () => {
     const dupMemoCard = memoCard;
 
     if (dupMemoCard?.length) {
-      dupMemoCard
-        .sort((a, b) => b.id - a.id)
-        .forEach((data) => {
-          data.isNew = false;
-        });
+      if (isAdmin) {
+        dupMemoCard
+          .sort((a, b) => b.no - a.no)
+          .forEach((data) => {
+            data.isNew = false;
+          });
+      } else {
+        dupMemoCard
+          .sort((a, b) => a.no - b.no)
+          .forEach((data) => {
+            data.isNew = false;
+          });
+      }
 
       setMemoCard(dupMemoCard);
     }
@@ -48,6 +48,7 @@ const HomePage = () => {
     setUserCardNo(cardUserNo + 1);
 
     const card = {
+      no: memoCard?.length + 1,
       id:
         memoCard?.length > 0
           ? `${userRole}-${isAdmin ? cardAdminNo + 1 : cardUserNo + 1}`
@@ -57,9 +58,21 @@ const HomePage = () => {
       isNew: true,
     };
 
-    setMemoCard([card, ...memoCard]);
+    if (isAdmin) {
+      setMemoCard([card, ...memoCard]);
+    } else {
+      setMemoCard([...memoCard, card]);
+    }
     setIsAddNew(false);
     localStorage.setItem("memoCardData", JSON.stringify([card, ...memoCard]));
+  };
+
+  const countLengthMemo = () => {
+    if (isAdmin) {
+      return memoCard?.length;
+    } else {
+      return memoCard?.filter((data) => data?.role === ROLE.USER)?.length;
+    }
   };
 
   const getStoreCard = useCallback(() => {
@@ -76,9 +89,9 @@ const HomePage = () => {
 
       if (memo?.length) {
         if (userData?.role === ROLE.ADMIN) {
-          sortMemo = memo?.sort((a, b) => b.id - a.id);
+          sortMemo = memo?.sort((a, b) => b.no - a.no);
         } else {
-          sortMemo = memo?.sort((a, b) => a.id - b.id);
+          sortMemo = memo?.sort((a, b) => a.no - b.no);
         }
       }
 
@@ -107,7 +120,6 @@ const HomePage = () => {
     <Box
       sx={{
         minHeight: "100vh",
-        bgColor: "black",
         color: "white",
         p: 5,
         bgcolor: "#0a0a0a",
@@ -117,7 +129,7 @@ const HomePage = () => {
         <Typography variant="h4" fontWeight="bold">
           Memo Cards
           <Typography variant="h6" component="span" ml={1}>
-            ({memoCard?.length || 0}
+            ({countLengthMemo() || 0}
             {isAddNew && "+1"})
           </Typography>
         </Typography>
@@ -147,63 +159,6 @@ const HomePage = () => {
                     cardRole={card.role}
                     cardContent={card.content}
                   />
-                  {/* <CardComponent>
-                    {card.isNew && (
-                      <Chip
-                        label="NEW"
-                        color="secondary"
-                        size="small"
-                        sx={{
-                          p: 1,
-                          fontSize: "10px",
-                          position: "absolute",
-                          top: -10,
-                          right: -10,
-                        }}
-                      />
-                    )}
-                    <CardContent>
-                      <Grid container spacing={3} justifyContent="center">
-                        <Grid
-                          size={{ xs: 4.5, sm: 4, md: 3, lg: 3.5 }}
-                          sx={{
-                            display: "flex",
-                            flexDirection: "column",
-                            justifyContent: "space-between",
-                            alignItems: "center",
-                            height: "150px",
-                          }}
-                        >
-                          <Box>
-                            <Typography variant="subtitle2" fontWeight="bold">
-                              {card.id}
-                            </Typography>
-                            <Chip
-                              label={card.role}
-                              color={ROLE_COLOR[card.role]}
-                              size="small"
-                            />
-                          </Box>
-                        </Grid>
-                        <Grid
-                          size={{ xs: 7.5, sm: 8, md: 9, lg: 8.5 }}
-                          sx={{
-                            height: "150px",
-                            overflowY: "auto",
-                          }}
-                        >
-                          <Typography
-                            color="text.secondary"
-                            sx={{
-                              fontSize: "11px",
-                            }}
-                          >
-                            {card.content}
-                          </Typography>
-                        </Grid>
-                      </Grid>
-                    </CardContent>
-                  </CardComponent> */}
                 </Grid>
               );
           })}
@@ -223,74 +178,6 @@ const HomePage = () => {
               setContent={setContent}
               handleAddCard={handleAddCard}
             />
-            {/* <CardComponent>
-              <CardContent
-                sx={{
-                  flexGrow: 1,
-                  display: "flex",
-                  flexDirection: "column",
-                  pb: "0px",
-                }}
-              >
-                <Grid container spacing={3} justifyContent="center">
-                  <Grid
-                    size={{ xs: 4.5, sm: 4, md: 3, lg: 3.5 }}
-                    sx={{
-                      display: "flex",
-                      flexDirection: "column",
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                      height: "150px",
-                    }}
-                  >
-                    <Box display="flex" flexDirection="column">
-                      <Typography variant="subtitle2" fontWeight="bold">
-                        {user?.role == ROLE.USER ? "MEMO-" : "ADMIN-"}
-                        {(user?.role == ROLE.USER
-                          ? +userCardNo
-                          : +adminCardNo) + 1}
-                      </Typography>
-                      <Chip
-                        label={user && user?.role}
-                        color={ROLE_COLOR[user && user?.role]}
-                        size="small"
-                      />
-                    </Box>
-                    <Box>
-                      <Typography
-                        variant="subtitle1"
-                        fontWeight="bold"
-                        sx={{
-                          cursor: "pointer",
-                          textDecoration: "underLine",
-                        }}
-                        onClick={handleAddCard}
-                      >
-                        SAVE
-                      </Typography>
-                    </Box>
-                  </Grid>
-                  <Grid
-                    size={{ xs: 7.5, sm: 8, md: 9, lg: 8.5 }}
-                    sx={{
-                      height: "150px",
-                    }}
-                  >
-                    <TextAreaComponent
-                      id="userId"
-                      multiline
-                      rows={6}
-                      fullWidth
-                      placeholder="Type something..."
-                      sx={{
-                        height: "100%",
-                      }}
-                      onChange={(e) => setContent(e.target.value)}
-                    />
-                  </Grid>
-                </Grid>
-              </CardContent>
-            </CardComponent> */}
           </Grid>
         ) : (
           <Grid size={{ xs: 12, sm: 6, md: 4, lg: 4 }}>

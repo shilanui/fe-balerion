@@ -71,7 +71,6 @@ const CardComponent = ({ isNew, cardId, cardRole, cardContent, ...props }) => {
       </CardContent>
     </Card>
   );
-  // return <Card {...props}>{children}</Card>;
 };
 
 export default CardComponent;
