@@ -1,4 +1,16 @@
 ## Getting Started
+https://fe-balerion.vercel.app/auth/login
+
+User Test Login 2 users, 2 roles
+```
+- user: admin
+- pass: 1234
+
+- user: user
+- pass: 1234
+```
+
+## Run in Local
 
 First, Setting the mock API like Tweak Extention
 - http://localhost:3001/api/v1/login/admin
@@ -32,11 +44,4 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-User Test Login 2 users, 2 roles
-```
-- user: admin
-- pass: 1234
 
-- user: user
-- pass: 1234
-```
