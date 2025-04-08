@@ -1,4 +1,4 @@
-## Getting Started
+## Getting Started (Please set mockup API and run first)
 https://fe-balerion.vercel.app/auth/login
 
 User Test Login 2 users, 2 roles
