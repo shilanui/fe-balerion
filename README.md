@@ -23,17 +23,20 @@ response is:
 }
 ```
 
-First, run the development server:
+Second, run the development server:
 
-```bash
+```
 npm install
 npm run dev
+```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 User Test Login 2 users, 2 roles
+```
 - user: admin
 - pass: 1234
 
 - user: user
 - pass: 1234
+```
