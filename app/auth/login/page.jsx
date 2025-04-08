@@ -10,6 +10,7 @@ import {
 import TextFieldComponent from "@/components/TextFieldComponent/TextFieldComponent";
 import { useRouter } from "next/navigation";
 import { authLoginAdmin, authLoginUser } from "@/api/auth/auth";
+import { jwtDecode } from "jwt-decode";
 
 const LoginPage = () => {
   const router = useRouter();
@@ -29,7 +30,10 @@ const LoginPage = () => {
         : await authLoginUser(payload);
 
     if (res?.response?.token) {
+      const decoded = jwtDecode(res?.response?.token);
       localStorage.setItem("token", res?.response?.token);
+      localStorage.setItem("userData", JSON.stringify(decoded));
+
       router.push("/");
     }
   };
