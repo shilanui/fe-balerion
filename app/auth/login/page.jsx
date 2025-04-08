@@ -7,7 +7,7 @@ import {
   Typography,
   FormControl,
 } from "@mui/material";
-import TextFieldComponent from "@/components/TextFieldComponent/TextFieldComponent";
+import TextFieldComponent from "@/components/TextField/TextFieldComponent";
 import { useRouter } from "next/navigation";
 import { authLoginAdmin, authLoginUser } from "@/api/auth/auth";
 import { jwtDecode } from "jwt-decode";
@@ -17,6 +17,7 @@ const LoginPage = () => {
   const [userId, setUserId] = useState("");
   const [password, setPassword] = useState("");
   const [maskPassword, setMaskPassword] = useState("");
+  const [alertText, setAlertText] = useState(null);
 
   const handleLogin = async () => {
     const payload = {
@@ -24,17 +25,22 @@ const LoginPage = () => {
       password,
     };
 
-    const res =
-      userId === "admin"
-        ? await authLoginAdmin(payload)
-        : await authLoginUser(payload);
+    if ((userId === "admin" || userId === "user") && password === "1234") {
+      const res =
+        userId === "admin"
+          ? await authLoginAdmin(payload)
+          : await authLoginUser(payload);
 
-    if (res?.response?.token) {
-      const decoded = jwtDecode(res?.response?.token);
-      localStorage.setItem("token", res?.response?.token);
-      localStorage.setItem("userData", JSON.stringify(decoded));
+      if (res?.response?.token) {
+        const decoded = jwtDecode(res?.response?.token);
+        localStorage.setItem("token", res?.response?.token);
+        localStorage.setItem("userData", JSON.stringify(decoded));
 
-      router.push("/");
+        setAlertText(null);
+        router.push("/");
+      }
+    } else {
+      setAlertText("User or Password wrong!");
     }
   };
 
@@ -116,6 +122,7 @@ const LoginPage = () => {
         >
           ค้นหา
         </Button>
+        {alertText && <Typography color="error">{alertText}</Typography>}
       </Box>
     </Box>
   );

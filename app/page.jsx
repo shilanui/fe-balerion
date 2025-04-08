@@ -8,11 +8,13 @@ import {
   Chip,
   IconButton,
 } from "@mui/material";
-import AddIcon from "@mui/icons-material/Add";
+
 import { useState, useCallback, useEffect } from "react";
-import TextAreaComponent from "@/components/TextFieldComponent/TextAreaComponent";
+import TextAreaComponent from "@/components/TextField/TextAreaComponent";
 import CardComponent from "@/components/Card/CardComponent";
 import { ROLE, ROLE_COLOR } from "@/constant/role";
+import AddIconComponent from "@/components/AddComponent/AddIconComponent";
+import AddTextCardComponent from "@/components/AddComponent/AddTextCardComponent";
 
 const HomePage = () => {
   const [user, setUser] = useState(null);
@@ -139,7 +141,13 @@ const HomePage = () => {
                     position: "relative",
                   }}
                 >
-                  <CardComponent>
+                  <CardComponent
+                    isNew={card.isNew}
+                    cardId={card.id}
+                    cardRole={card.role}
+                    cardContent={card.content}
+                  />
+                  {/* <CardComponent>
                     {card.isNew && (
                       <Chip
                         label="NEW"
@@ -195,7 +203,7 @@ const HomePage = () => {
                         </Grid>
                       </Grid>
                     </CardContent>
-                  </CardComponent>
+                  </CardComponent> */}
                 </Grid>
               );
           })}
@@ -208,7 +216,14 @@ const HomePage = () => {
               position: "relative",
             }}
           >
-            <CardComponent>
+            <AddTextCardComponent
+              userRole={user?.role}
+              userCardNo={userCardNo}
+              adminCardNo={adminCardNo}
+              setContent={setContent}
+              handleAddCard={handleAddCard}
+            />
+            {/* <CardComponent>
               <CardContent
                 sx={{
                   flexGrow: 1,
@@ -275,33 +290,11 @@ const HomePage = () => {
                   </Grid>
                 </Grid>
               </CardContent>
-            </CardComponent>
+            </CardComponent> */}
           </Grid>
         ) : (
           <Grid size={{ xs: 12, sm: 6, md: 4, lg: 4 }}>
-            <Box
-              sx={{
-                bgcolor: "#d1d5db",
-                borderRadius: 2,
-                height: "100%",
-                width: "100%",
-                minHeight: "180px",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                color: "gray.600",
-                cursor: "pointer",
-                transition: "all 0.3s",
-                "&:hover": {
-                  bgcolor: "#9ca3af",
-                },
-              }}
-              onClick={() => setIsAddNew(true)}
-            >
-              <IconButton size="large">
-                <AddIcon fontSize="inherit" />
-              </IconButton>
-            </Box>
+            <AddIconComponent onClick={() => setIsAddNew(true)} />
           </Grid>
         )}
       </Grid>

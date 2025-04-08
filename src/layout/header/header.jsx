@@ -17,8 +17,6 @@ const HeaderComponent = () => {
   const getUserData = useCallback(() => {
     const userData = JSON.parse(localStorage.getItem("userData"));
 
-    console.log("getUserData userData =", userData);
-
     if (userData) {
       setUser(userData);
     }
