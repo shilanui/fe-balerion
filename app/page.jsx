@@ -90,11 +90,11 @@ const HomePage = () => {
   }, []);
 
   const getUserData = useCallback(() => {
-    const user = JSON.parse(localStorage.getItem("userData"));
+    const userData = JSON.parse(localStorage.getItem("userData"));
 
-    if (user) {
-      setUser(user);
-      setIsAdmin(user?.role === ROLE.ADMIN ? true : false);
+    if (userData) {
+      setUser(userData);
+      setIsAdmin(userData?.role === ROLE.ADMIN ? true : false);
     }
   }, []);
 
@@ -238,8 +238,8 @@ const HomePage = () => {
                           : +adminCardNo) + 1}
                       </Typography>
                       <Chip
-                        label={user?.role}
-                        color={ROLE_COLOR[user?.role]}
+                        label={user && user?.role}
+                        color={ROLE_COLOR[user && user?.role]}
                         size="small"
                       />
                     </Box>
