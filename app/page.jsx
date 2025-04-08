@@ -1,7 +1,6 @@
 "use client";
 
 import {
-  Card,
   CardContent,
   Typography,
   Grid,
@@ -11,7 +10,6 @@ import {
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import { useState, useCallback, useEffect } from "react";
-
 import TextAreaComponent from "@/components/TextFieldComponent/TextAreaComponent";
 import CardComponent from "@/components/Card/CardComponent";
 import { ROLE, ROLE_COLOR } from "@/constant/role";
@@ -40,9 +38,9 @@ const HomePage = () => {
 
     const userRole = isAdmin ? ROLE.ADMIN : "MEMO";
     const cardUserNo =
-      memoCard?.filter((data) => data?.role.includes(ROLE.USER))?.length || 0;
+      memoCard?.filter((data) => data?.role === ROLE.USER)?.length || 0;
     const cardAdminNo =
-      memoCard?.filter((data) => data?.role.includes(ROLE.ADMIN))?.length || 0;
+      memoCard?.filter((data) => data?.role === ROLE.ADMIN)?.length || 0;
 
     setAdminCardNo(cardAdminNo + 1);
     setUserCardNo(cardUserNo + 1);
