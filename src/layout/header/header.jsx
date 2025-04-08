@@ -15,12 +15,12 @@ const HeaderComponent = () => {
   };
 
   const getUserData = useCallback(() => {
-    const user = JSON.parse(localStorage.getItem("userData"));
+    const userData = JSON.parse(localStorage.getItem("userData"));
 
-    console.log("getUserData user =", user);
+    console.log("getUserData userData =", userData);
 
-    if (user) {
-      setUser(user);
+    if (userData) {
+      setUser(userData);
     }
   }, []);
 
