@@ -105,7 +105,7 @@ const HomePage = () => {
     }
   }, [getUserData, getStoreCard]);
 
-  return !user ? null : (
+  return (
     <Box
       sx={{
         minHeight: "100vh",
