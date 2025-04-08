@@ -25,7 +25,7 @@ const AddIconComponent = ({ ...props }) => {
       {...props}
     >
       <IconButton size="large">
-        <AddIcon fontSize="inherit" />
+        <AddIcon fontSize="inherit" sx={{ fontSize: 60, color: "black" }} />
       </IconButton>
     </Box>
   );

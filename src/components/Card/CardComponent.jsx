@@ -8,14 +8,17 @@ const CardComponent = ({ isNew, cardId, cardRole, cardContent, ...props }) => {
       {isNew && (
         <Chip
           label="NEW"
-          color="secondary"
           size="small"
           sx={{
             p: 1,
-            fontSize: "10px",
+            fontSize: "12px",
+            fontWeight: 600,
             position: "absolute",
+            height: "34px",
             top: -10,
             right: -10,
+            color: "white",
+            bgcolor: "rgba(140, 108, 255, 1)",
           }}
         />
       )}
@@ -37,8 +40,14 @@ const CardComponent = ({ isNew, cardId, cardRole, cardContent, ...props }) => {
               </Typography>
               <Chip
                 label={cardRole}
-                color={ROLE_COLOR[cardRole]}
                 size="small"
+                sx={{
+                  height: "34px",
+                  fontSize: "12px",
+                  fontWeight: 600,
+                  color: "white",
+                  bgcolor: ROLE_COLOR[cardRole],
+                }}
               />
             </Box>
           </Grid>

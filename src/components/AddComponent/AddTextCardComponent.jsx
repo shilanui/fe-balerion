@@ -34,13 +34,19 @@ const AddTextCardComponent = ({
           >
             <Box display="flex" flexDirection="column">
               <Typography variant="subtitle2" fontWeight="bold">
-                {user?.role == ROLE.USER ? "MEMO-" : "ADMIN-"}
-                {(user?.role == ROLE.USER ? +userCardNo : +adminCardNo) + 1}
+                {userRole == ROLE.USER ? "MEMO-" : "ADMIN-"}
+                {(userRole == ROLE.USER ? +userCardNo : +adminCardNo) + 1}
               </Typography>
               <Chip
-                label={user?.role}
-                color={ROLE_COLOR[user?.role]}
+                label={userRole}
                 size="small"
+                sx={{
+                  height: "34px",
+                  fontSize: "12px",
+                  fontWeight: 600,
+                  color: "white",
+                  bgcolor: ROLE_COLOR[userRole],
+                }}
               />
             </Box>
             <Box>
