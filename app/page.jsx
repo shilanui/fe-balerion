@@ -99,10 +99,8 @@ const HomePage = () => {
   }, []);
 
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      getUserData();
-      getStoreCard();
-    }
+    getUserData();
+    getStoreCard();
   }, [getUserData, getStoreCard]);
 
   return (

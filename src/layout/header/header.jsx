@@ -23,9 +23,7 @@ const HeaderComponent = () => {
   }, []);
 
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      getUserData();
-    }
+    getUserData();
   }, [getUserData]);
 
   return (
